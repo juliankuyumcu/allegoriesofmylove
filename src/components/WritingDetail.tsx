@@ -55,7 +55,7 @@ export default function WritingDetail({ selectedWriting, setSelectedWriting, wri
                             transition={{ duration: 0.5 }}
                         >
                             <Image
-                                className="max--h- max-w-full object-contain"
+                                className="grow max-h-full max-w-full object-contain"
                                 width={10}
                                 height={10}
                                 src={writingMedia.data.attributes.url}
