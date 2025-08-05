@@ -33,7 +33,7 @@ export default function WritingTitle({ writing, setSelectedWriting, isHeader, is
                         <AnimatePresence>
                             <motion.button
                                 className={`cursor-pointer overflow-hidden`}
-                                onClick={() => setSelectedWriting(null)}
+                                onClick={() => {setSelectedWriting(null); if (setShowMedia) setShowMedia(false);}}
                                 initial={{ width: 0 }}
                                 animate={{ width: 30 }}
                                 transition={{ delay: 0.8 }}

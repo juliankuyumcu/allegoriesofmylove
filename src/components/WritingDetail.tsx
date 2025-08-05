@@ -10,14 +10,11 @@ interface WritingDetailProps {
     setSelectedWriting: React.Dispatch<React.SetStateAction<WritingPreviewType | null>>;
     writingContent: string;
     writingMedia: MediaType | null;
+    showMedia: boolean;
+    setShowMedia: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function WritingDetail({ selectedWriting, setSelectedWriting, writingContent, writingMedia }: WritingDetailProps) {
-
-    const [ showMedia, setShowMedia ] = useState(false);
-    const [ interactive, setInteractive ] = useState(true);
-    console.log(!!writingMedia);
-
+export default function WritingDetail({ selectedWriting, setSelectedWriting, writingContent, writingMedia, showMedia, setShowMedia }: WritingDetailProps) {
     return (
         <div className={`relative h-full flex flex-col gap-3 p-2`}>
             <WritingTitle
@@ -48,7 +45,7 @@ export default function WritingDetail({ selectedWriting, setSelectedWriting, wri
                     {showMedia &&
                         <motion.div
                             key="media"
-                            className="flex-1 flex justify-center items-center overflow-hidden"
+                            className="flex-1 flex justify-center items-center overflow-y-hidden p-6"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
