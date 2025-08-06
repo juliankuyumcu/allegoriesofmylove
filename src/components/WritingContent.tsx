@@ -1,33 +1,25 @@
-"use client";
-
-import React, { useEffect, useState, useRef } from "react";
-import { motion } from "motion/react";
+import React from "react";
 import Paragraph from "./Paragraph";
 
 interface WritingContentProps {
     content: string;
+    typeIn: boolean;
 }
 
-export default function WritingContent({ content }: WritingContentProps) {
+export default function WritingContent({ content, typeIn }: WritingContentProps) {
 
     const paragraphs = content.split("\n");
-    const [interactive, setInteractive] = useState(false);
 
     return (
-        <motion.div
-            // initial={{ opacity: 0 }}
-            // animate={{ opacity: 1 }}
-            // transition={{ delay: 1.5 }}
-            onAnimationComplete={() => setInteractive(true)}
-        >
+        <div>
             {paragraphs.map((paragraph, index) =>
                 <Paragraph
                     key={index}
                     paragraph={paragraph}
                     index={index}
-                    paragraphCount={paragraphs.length}
+                    typeIn={typeIn}
                 />
             )}
-        </motion.div>
+        </div>
     );
 };

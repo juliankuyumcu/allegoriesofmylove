@@ -21,7 +21,7 @@ export default function Pin({ slug }: PinProps) {
         <button 
             className="cursor-pointer"
             onClick={() => togglePin(slug)} 
-            title="Pin to top"
+            title={`${localPinned ? "Unpin from" : "Pin to"} top`}
         >
             <svg 
                 xmlns="http://www.w3.org/2000/svg" 

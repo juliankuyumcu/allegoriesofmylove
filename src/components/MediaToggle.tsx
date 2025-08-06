@@ -9,7 +9,7 @@ export default function MediaToggle({ showMedia, setShowMedia }: MediaToggleProp
     return (
         <button
             className="cursor-pointer"
-            title={"Toggle media"}
+            title={`${showMedia ? "Hide" : "Show"} image`}
             onClick={() => setShowMedia(!showMedia)}
         >
             <svg 

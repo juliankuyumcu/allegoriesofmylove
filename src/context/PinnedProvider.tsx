@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
 type PinnedContextType = {
-    pinnedSlugs: Set<string>;
+    pinnedSlugs: Set<string> | null;
     togglePin: (slug: string) => void;
     isPinned: (slug: string) => boolean;
 }
@@ -11,7 +11,7 @@ type PinnedContextType = {
 const PinnedContext = createContext<PinnedContextType | undefined>(undefined);
 
 export const PinnedProvider = ({ children }: { children: ReactNode }) => {
-    const [ pinnedSlugs, setPinnedSlugs ] = useState<Set<string>>(new Set());
+    const [ pinnedSlugs, setPinnedSlugs ] = useState<Set<string> | null>(null);
 
     useEffect(() => {
         const stored: Set<string> = new Set(JSON.parse(localStorage.getItem("pinned") || "[]"));
@@ -19,7 +19,7 @@ export const PinnedProvider = ({ children }: { children: ReactNode }) => {
     }, []);
     
     const togglePin = (slug: string) => {
-        setPinnedSlugs((prev: Set<string>) => {
+        setPinnedSlugs((prev: Set<string> | null) => {
             const newSet = new Set(prev);
             if (newSet.has(slug))
                 newSet.delete(slug);
@@ -30,7 +30,7 @@ export const PinnedProvider = ({ children }: { children: ReactNode }) => {
         });
     };
 
-    const isPinned = (slug: string) => pinnedSlugs.has(slug);
+    const isPinned = (slug: string) => pinnedSlugs !== null && pinnedSlugs.has(slug);
 
     return (
         <PinnedContext.Provider value={{ pinnedSlugs, togglePin, isPinned }}>

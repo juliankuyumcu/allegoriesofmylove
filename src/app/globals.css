@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #F9F9F9;
+  --paper: #eeece3;
   --ink: #6B6247;
-  --pencil: #D9D9D9;
+  --pencil: #cac7b5;
 };
 
 @theme inline {
@@ -42,7 +42,7 @@
 
 .dark ::-webkit-scrollbar-track {
   /* background-color: var(--ink); */
-  background-color: var(--paper);
+  background-color: var(--pencil);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -50,7 +50,7 @@
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background-color: var(--paper);
+  background-color: var(--pencil);
 }
 
 body {

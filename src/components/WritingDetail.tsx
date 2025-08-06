@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { MediaType, WritingPreviewType } from "@/util/types";
 import WritingTitle from "@/components/WritingTitle";
@@ -15,8 +15,16 @@ interface WritingDetailProps {
 }
 
 export default function WritingDetail({ selectedWriting, setSelectedWriting, writingContent, writingMedia, showMedia, setShowMedia }: WritingDetailProps) {
+
+    const [ typeIn, setTypeIn ] = useState(true);
+
+    useEffect(() => {
+        if (showMedia === true)
+            setTypeIn(false);
+    }, [showMedia]);
+
     return (
-        <div className={`relative h-full flex flex-col gap-3 p-2`}>
+        <div className={`relative h-full flex flex-col gap-3 px-2`}>
             <WritingTitle
                 writing={selectedWriting}
                 setSelectedWriting={setSelectedWriting}
@@ -32,13 +40,14 @@ export default function WritingDetail({ selectedWriting, setSelectedWriting, wri
                         <motion.div
                             key="content"
                             className={``}
-                            initial={{ opacity: 0 }}
+                            initial={{ opacity: 1 }}
                             animate={{ opacity: 1 }}
-                            transition={{  duration: 1 }}
+                            transition={{ duration: 0.5 }}
                             exit={{opacity: 0 }}
                         >
                             <WritingContent
                                 content={writingContent}
+                                typeIn={typeIn}
                             />
                         </motion.div>
                     }
@@ -49,13 +58,13 @@ export default function WritingDetail({ selectedWriting, setSelectedWriting, wri
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            transition={{ duration: 0.5 }}
+                            transition={{ duration: 0.4 }}
                         >
                             <Image
                                 className="grow max-h-full max-w-full object-contain"
-                                width={10}
-                                height={10}
-                                src={writingMedia.data.attributes.url}
+                                width={465}
+                                height={478}
+                                src={(process.env.NEXT_PUBLIC_STRAPI_URL || "") + writingMedia.data.attributes.url}
                                 alt={"Drawing of " + selectedWriting.data.attributes.title}
                             />
                         </motion.div>

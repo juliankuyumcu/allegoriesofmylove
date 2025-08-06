@@ -1,4 +1,4 @@
-import React, { SetStateAction, useEffect, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { WritingPreviewType } from "@/util/types";
 import Pin from "./Pin";
 import { AnimatePresence, motion, useInView } from "motion/react";
@@ -18,6 +18,22 @@ export default function WritingTitle({ writing, setSelectedWriting, isHeader, is
     const ref = useRef(null);
     const isInView = useInView(ref, {amount: 0.5});
 
+    const [ copied, setCopied ] = useState(false);
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+    useEffect(() => {
+        if (!copied) return;
+
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = null;
+        }
+
+        timeoutRef.current = setTimeout(() => {
+            setCopied(false);
+        }, 1000);
+    }, [copied]);
+
     return (
         <motion.div
             ref={ref} 
@@ -26,7 +42,7 @@ export default function WritingTitle({ writing, setSelectedWriting, isHeader, is
             animate={{ opacity: !isInView ? 0 : 1}}
         >
             <motion.div
-                className={`flex flex-row justify-between duration-500`}
+                className={`flex flex-row gap-4 justify-between duration-500`}
             >
                 {isHeader ?
                     <div className={`flex flex-row gap-2`}>
@@ -43,30 +59,51 @@ export default function WritingTitle({ writing, setSelectedWriting, isHeader, is
                                 ←
                             </motion.button>
                         </AnimatePresence>
-                        <h2>
+                        <h2 className="text-left">
                             [ {writing?.data.attributes.title.toLowerCase()} ]
                         </h2>
                     </div>   
                     :
                     <button
-                        className={`cursor-pointer  `}
+                        className={`cursor-pointer text-left`}
                         onClick={() => setSelectedWriting(writing)}
                         title="Open"
                     >
                         [ {writing?.data.attributes.title.toLowerCase()} ]
                     </button>
                 }
-                <div className="inline-flex flex-row gap-4 items-center">
-                    {isHeader &&
-                        <>
-                            {(isMedia && showMedia !== undefined && setShowMedia !== undefined) && <MediaToggle showMedia={showMedia} setShowMedia={setShowMedia} />}
-                            <Share slug={writing.data.attributes.slug} />
-                        </>
+                <AnimatePresence mode="wait">
+                    {copied &&
+                        <motion.div
+                            key="notice"
+                            className="pr-2 pointer-events-none"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                        >
+                            <p className="text-right">copied to clipboard</p>
+                        </motion.div>
                     }
-                    <Pin slug={writing.data.attributes.slug}/>
-                </div>
+                    {!copied &&
+                        <motion.div
+                            key="buttons" 
+                            className="inline-flex flex-row gap-4 items-center"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                        >
+                                {isHeader &&
+                                    <>
+                                        {(isMedia && showMedia !== undefined && setShowMedia !== undefined) && <MediaToggle showMedia={showMedia} setShowMedia={setShowMedia} />}
+                                        <Share slug={writing.data.attributes.slug} setCopied={setCopied} />
+                                    </>
+                                }
+                                <Pin slug={writing.data.attributes.slug}/>
+                        </motion.div>
+                    }
+                </AnimatePresence>
             </motion.div>
-            <span className="h-px w-full bg-ink dark:bg-paper duration-1000"></span>
+            <span className="h-px w-full bg-pencil dark:bg-pencil duration-1000"></span>
         </motion.div>
     );
 }

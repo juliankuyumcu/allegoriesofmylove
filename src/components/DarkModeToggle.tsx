@@ -8,15 +8,15 @@ export default function DarkModeToggle() {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <motion.div 
+    <motion.button 
       onClick={() => toggleTheme()} 
-      className="cursor-pointer -mb-1"
+      className="cursor-pointer w-min h-min -mr-1"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.5 }}
-      title="Toggle theme"
+      title={`${theme === "dark" ? "Light" : "Dark"} mode`}
     >
-      <svg width="25" height="25" viewBox="0 0 25 20">
+      <svg width="25" height="25" viewBox="5 0 25  20">
         <motion.circle 
             cx="17" 
             cy="10" 
@@ -43,6 +43,6 @@ export default function DarkModeToggle() {
           })}
         </motion.g>
       </svg>
-    </motion.div>
+    </motion.button>
   );
 }

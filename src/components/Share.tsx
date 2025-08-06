@@ -1,14 +1,16 @@
 import React from "react";
 
 interface ShareProps {
-    slug: string
+    slug: string;
+    setCopied: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function Share({ slug }: ShareProps) {
+export default function Share({ slug, setCopied }: ShareProps) {
+
     return (
         <button 
-            className="cursor-pointer"
-            onClick={() => navigator.clipboard.writeText("https://allegoriesofmy.love/" + slug)}
+            className="cursor-pointer overflow-visible"
+            onClick={() => {navigator.clipboard.writeText("https://" + process.env.NEXT_PUBLIC_DOMAIN + "/" + slug); setCopied(true);}}
             title={"Share"}
         >
             <svg 
@@ -46,6 +48,5 @@ export default function Share({ slug }: ShareProps) {
                 />
             </svg>
         </button>
-            
     )
 };

@@ -20,7 +20,7 @@ export default function ContentBox({data, writing} : {data: WritingPreviewType[]
     const poemContent = `Playwright in all its splendor\nTaking years to finally bloom\n\nA vacuous dream space made existent only by hope\nTears flood in when the gates are opened\nYet evaporation takes it all away again\nOr, is it gravity\n\nIt isn’t the same as the others\nLife beams in separate chambers\n\nBut all is ignored\nIn the end\n\nPlaywright in all its splendor\nTaking years to finally bloom\n\nA vacuous dream space made existent only by hope\nTears flood in when the gates are opened\nYet evaporation takes it all away again\nOr, is it gravity\n\nIt isn’t the same as the others\nLife beams in separate chambers\n\nBut all is ignored\nIn the end`;
 
     return (
-        <main className="flex flex-col gap-3 subpixel-antialiased">
+        <main className="flex flex-col gap-4 subpixel-antialiased">
             <nav className="flex flex-row justify-between">
                 <motion.h1
                     key="default"
@@ -47,6 +47,7 @@ export default function ContentBox({data, writing} : {data: WritingPreviewType[]
                     <motion.div
                             key="list"
                             className={`w-116 h-120 overflow-y-scroll scroll-smooth snap-y pr-3 duration-1000 ${!interactive ? "pointer-events-none" : ""}`}
+                            inert={interactive ? false : true}
                             initial={{ opacity: 0 }}
                             animate={{ opacity: selectedWriting ? 0 : 1}}
                             transition={{ delay: !selectedWriting ? 0.5 : 0 }}
@@ -69,7 +70,7 @@ export default function ContentBox({data, writing} : {data: WritingPreviewType[]
                                     selectedWriting={selectedWriting}
                                     setSelectedWriting={setSelectedWriting}
                                     writingContent={poemContent}
-                                    writingMedia={{data: {attributes: {url: "./globe.svg"}}}}
+                                    writingMedia={{data: {attributes: {url: "/image-4.png"}}}}
                                     showMedia={showMedia}
                                     setShowMedia={setShowMedia}
                                 />
@@ -93,7 +94,7 @@ export default function ContentBox({data, writing} : {data: WritingPreviewType[]
                     initial={{ opacity: 0 }}
                     animate={{ opacity: (selectedWriting && showMedia) ? 1 : 0 }}
                     // exit={{ opacity: 0 }}
-                    transition={{ delay: showMedia ? 0 : selectedWriting ? 1 : 0 , duration: 0.3 }}
+                    transition={{ delay: showMedia ? 0 : selectedWriting ? 0.5 : 0 , duration: 0.3 }}
                 >
                     <div className="w-px h-[98%] bg-pencil dark:bg-paper z-11"></div>
                 </motion.div>
