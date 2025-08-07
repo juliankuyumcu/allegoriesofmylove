@@ -10,7 +10,7 @@ export default function Share({ slug, setCopied }: ShareProps) {
     return (
         <button 
             className="cursor-pointer overflow-visible"
-            onClick={() => {navigator.clipboard.writeText("https://" + process.env.NEXT_PUBLIC_DOMAIN + "/" + slug); setCopied(true);}}
+            onClick={() => {navigator.clipboard.writeText(process.env.NEXT_PUBLIC_DOMAIN + "/" + slug); setCopied(true);}}
             title={"Share"}
         >
             <svg 

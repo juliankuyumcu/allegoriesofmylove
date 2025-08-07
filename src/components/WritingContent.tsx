@@ -8,6 +8,7 @@ interface WritingContentProps {
 
 export default function WritingContent({ content, typeIn }: WritingContentProps) {
 
+    console.log(content);
     const paragraphs = content.split("\n");
 
     return (

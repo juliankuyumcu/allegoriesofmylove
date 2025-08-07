@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { AnimatePresence } from "motion/react";
 import DarkModeToggle from "./DarkModeToggle";
@@ -8,7 +8,11 @@ import Margin from "./Margin";
 import WritingList from "./WritingList";
 import { WritingPreviewType } from "@/util/types";
 import WritingDetail from "./WritingDetail";
-import { useSearchParams } from "next/navigation";
+
+interface ContentBoxProps {
+    data: WritingPreviewType[],
+    writing: string 
+}
 
 export default function ContentBox({data, writing} : {data: WritingPreviewType[], writing: WritingPreviewType | null}) {
 

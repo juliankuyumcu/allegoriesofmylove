@@ -1,11 +1,19 @@
 
 import ContentBox from "@/components/ContentBox";
-import { WritingPreviewType } from "@/util/types";
+import { WritingPreviewType, WritingType } from "@/util/types";
 import { strapiFetch } from "@/util/fetch";
 
 // const data = (new Array(15).fill(0).map((_, i) => Object({data: {attributes: {title: `title for a memory ${i}`, slug:`title-for-a-memory-${i}`}}})));
 
-export default async function Home() {
+interface PageProps {
+  params: {
+    slug?: string;
+  }
+}
+
+export default async function Home({ params } : PageProps) {
+
+  const { slug } = await params;
 
   const getWritings = async () => await strapiFetch({
       method: "GET",
@@ -14,11 +22,21 @@ export default async function Home() {
       sort: ["createdAt:desc"],
   }) as WritingPreviewType[];
 
-  const data = await getWritings();
+  const getSpecificWriting = async (slug: string) => await strapiFetch({
+      method: "GET",
+      slug: "writings",
+      populate: ["media"],
+      filters: {
+          "slug": {"$eq": slug}
+      }
+  });
+
+  const writings = await getWritings();
+  const writing = slug ? (await getSpecificWriting(slug))[0] as WritingType : null;
 
   return (
     <>
-    <ContentBox data={data} writing={null}/>
+    <ContentBox data={writings} writing={writing}/>
     </>
   );
 }

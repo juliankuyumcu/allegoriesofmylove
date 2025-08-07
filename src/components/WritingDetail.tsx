@@ -23,6 +23,7 @@ export default function WritingDetail({ selectedWriting, setSelectedWriting, sho
             method: "GET",
             slug: "writings",
             populate: ["media"],
+            fields: ["content"],
             filters: {
                 "slug": {"$eq": selectedWriting.slug}
             },
@@ -48,43 +49,41 @@ export default function WritingDetail({ selectedWriting, setSelectedWriting, sho
                 setShowMedia={setShowMedia}
             />
             
-            {!!fullWriting?.media &&
-                <AnimatePresence mode="wait">
-                    {!showMedia && 
-                        <motion.div
-                            key="content"
-                            className={``}
-                            initial={{ opacity: 1 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.5 }}
-                            exit={{opacity: 0 }}
-                        >
-                            <WritingContent
-                                content={fullWriting?.content || ""}
-                                typeIn={typeIn}
-                            />
-                        </motion.div>
-                    }
-                    {showMedia &&
-                        <motion.div
-                            key="media"
-                            className="flex-1 flex justify-center items-center overflow-y-hidden p-6"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.4 }}
-                        >
-                            <Image
-                                className="grow max-h-full max-w-full object-contain"
-                                width={fullWriting?.media?.width}
-                                height={fullWriting?.media?.height}
-                                src={(process.env.NEXT_PUBLIC_STRAPI_URL || "") + fullWriting?.media?.url}
-                                alt={"Drawing of " + selectedWriting.title}
-                            />
-                        </motion.div>
-                    }
-                </AnimatePresence>
-            }
+            <AnimatePresence mode="wait">
+                {!showMedia && 
+                    <motion.div
+                        key="content"
+                        className={``}
+                        initial={{ opacity: 1 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5 }}
+                        exit={{opacity: 0 }}
+                    >
+                        <WritingContent
+                            content={fullWriting?.content || ""}
+                            typeIn={typeIn}
+                        />
+                    </motion.div>
+                }
+                {(!!fullWriting?.media && showMedia) &&
+                    <motion.div
+                        key="media"
+                        className="flex-1 flex justify-center items-center overflow-y-hidden p-6"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.4 }}
+                    >
+                        <Image
+                            className="grow max-h-full max-w-full object-contain"
+                            width={fullWriting?.media?.width}
+                            height={fullWriting?.media?.height}
+                            src={(process.env.NEXT_PUBLIC_STRAPI_URL || "") + fullWriting?.media?.url}
+                            alt={"Drawing of " + selectedWriting.title}
+                        />
+                    </motion.div>
+                }
+            </AnimatePresence>
         </div>
     );
 };
