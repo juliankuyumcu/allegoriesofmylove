@@ -26,7 +26,7 @@ export default function Paragraph({ paragraph, index, typeIn }: ParagraphProps) 
                 <motion.div
                     className={`absolute top-0 -right-px h-full bg-paper dark:bg-ink`}
                     key={index}
-                    initial={{ width: "101%"}}
+                    initial={{ width: "calc(100% + 3px)"}}
                     animate={{ width: 0 }}
                     transition={{ delay: (1 + 0.15 * (index + 1)), duration: 1, ease: "easeInOut" }}
                 ></motion.div>

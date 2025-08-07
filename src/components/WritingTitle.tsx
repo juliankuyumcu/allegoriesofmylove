@@ -60,7 +60,7 @@ export default function WritingTitle({ writing, setSelectedWriting, isHeader, is
                             </motion.button>
                         </AnimatePresence>
                         <h2 className="text-left">
-                            [ {writing?.data.attributes.title.toLowerCase()} ]
+                            [ {writing?.title.toLowerCase()} ]
                         </h2>
                     </div>   
                     :
@@ -69,7 +69,7 @@ export default function WritingTitle({ writing, setSelectedWriting, isHeader, is
                         onClick={() => setSelectedWriting(writing)}
                         title="Open"
                     >
-                        [ {writing?.data.attributes.title.toLowerCase()} ]
+                        [ {writing?.title.toLowerCase()} ]
                     </button>
                 }
                 <AnimatePresence mode="wait">
@@ -95,10 +95,10 @@ export default function WritingTitle({ writing, setSelectedWriting, isHeader, is
                                 {isHeader &&
                                     <>
                                         {(isMedia && showMedia !== undefined && setShowMedia !== undefined) && <MediaToggle showMedia={showMedia} setShowMedia={setShowMedia} />}
-                                        <Share slug={writing.data.attributes.slug} setCopied={setCopied} />
+                                        <Share slug={writing.slug} setCopied={setCopied} />
                                     </>
                                 }
-                                <Pin slug={writing.data.attributes.slug}/>
+                                <Pin slug={writing.slug}/>
                         </motion.div>
                     }
                 </AnimatePresence>

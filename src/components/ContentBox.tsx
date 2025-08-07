@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { AnimatePresence } from "motion/react";
 import DarkModeToggle from "./DarkModeToggle";
@@ -8,6 +8,7 @@ import Margin from "./Margin";
 import WritingList from "./WritingList";
 import { WritingPreviewType } from "@/util/types";
 import WritingDetail from "./WritingDetail";
+import { useSearchParams } from "next/navigation";
 
 export default function ContentBox({data, writing} : {data: WritingPreviewType[], writing: WritingPreviewType | null}) {
 
@@ -17,7 +18,10 @@ export default function ContentBox({data, writing} : {data: WritingPreviewType[]
     const contentRef = useRef(null);
     const isInView = useInView(contentRef, {once: true});
 
-    const poemContent = `Playwright in all its splendor\nTaking years to finally bloom\n\nA vacuous dream space made existent only by hope\nTears flood in when the gates are opened\nYet evaporation takes it all away again\nOr, is it gravity\n\nIt isn’t the same as the others\nLife beams in separate chambers\n\nBut all is ignored\nIn the end\n\nPlaywright in all its splendor\nTaking years to finally bloom\n\nA vacuous dream space made existent only by hope\nTears flood in when the gates are opened\nYet evaporation takes it all away again\nOr, is it gravity\n\nIt isn’t the same as the others\nLife beams in separate chambers\n\nBut all is ignored\nIn the end`;
+    // useEffect(() => {
+    //     window.history.pushState(null, "", window.history.state);
+    //     window.history.replaceState({...(selectedWriting && {slug: selectedWriting.slug})}, "", "http://localhost:3000" + (selectedWriting ? `/${selectedWriting.slug}` : ""));
+    // }, [selectedWriting]);
 
     return (
         <main className="flex flex-col gap-4 subpixel-antialiased">
@@ -69,8 +73,6 @@ export default function ContentBox({data, writing} : {data: WritingPreviewType[]
                                 <WritingDetail
                                     selectedWriting={selectedWriting}
                                     setSelectedWriting={setSelectedWriting}
-                                    writingContent={poemContent}
-                                    writingMedia={{data: {attributes: {url: "/image-4.png"}}}}
                                     showMedia={showMedia}
                                     setShowMedia={setShowMedia}
                                 />

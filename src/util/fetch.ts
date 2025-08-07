@@ -25,7 +25,7 @@ export const strapiFetch = async ({
     sort,
     pagination,
     body,
-}: StrapiFetchArgs): Promise<any> => {
+}: StrapiFetchArgs): Promise<Array<object>> => {
     const query = qs.stringify(
         {
             ...params,
@@ -54,5 +54,5 @@ export const strapiFetch = async ({
 
     const strapiJSON = await axios.request(requestConfig);
 
-    return strapiJSON.data;
+    return strapiJSON.data.data;
 };

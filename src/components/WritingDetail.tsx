@@ -1,22 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { MediaType, WritingPreviewType } from "@/util/types";
+import { MediaType, WritingPreviewType, WritingType } from "@/util/types";
 import WritingTitle from "@/components/WritingTitle";
 import WritingContent from "@/components/WritingContent";
 import Image from "next/image";
+import { strapiFetch } from "@/util/fetch";
 
 interface WritingDetailProps {
     selectedWriting: WritingPreviewType;
     setSelectedWriting: React.Dispatch<React.SetStateAction<WritingPreviewType | null>>;
-    writingContent: string;
-    writingMedia: MediaType | null;
     showMedia: boolean;
     setShowMedia: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function WritingDetail({ selectedWriting, setSelectedWriting, writingContent, writingMedia, showMedia, setShowMedia }: WritingDetailProps) {
+export default function WritingDetail({ selectedWriting, setSelectedWriting, showMedia, setShowMedia }: WritingDetailProps) {
 
     const [ typeIn, setTypeIn ] = useState(true);
+    const [ fullWriting, setFullWriting ] = useState<WritingType | null>(null);
+
+    useEffect(() => {
+        strapiFetch({
+            method: "GET",
+            slug: "writings",
+            populate: ["media"],
+            filters: {
+                "slug": {"$eq": selectedWriting.slug}
+            },
+        }).then((res) => {
+            if (res.length > 0)
+                setFullWriting(res[0] as WritingType);
+        });
+    }, [selectedWriting.slug]);
 
     useEffect(() => {
         if (showMedia === true)
@@ -29,12 +43,12 @@ export default function WritingDetail({ selectedWriting, setSelectedWriting, wri
                 writing={selectedWriting}
                 setSelectedWriting={setSelectedWriting}
                 isHeader={true}
-                isMedia={!!writingMedia}
+                isMedia={!!fullWriting?.media}
                 showMedia={showMedia}
                 setShowMedia={setShowMedia}
             />
             
-            {writingMedia &&
+            {!!fullWriting?.media &&
                 <AnimatePresence mode="wait">
                     {!showMedia && 
                         <motion.div
@@ -46,7 +60,7 @@ export default function WritingDetail({ selectedWriting, setSelectedWriting, wri
                             exit={{opacity: 0 }}
                         >
                             <WritingContent
-                                content={writingContent}
+                                content={fullWriting?.content || ""}
                                 typeIn={typeIn}
                             />
                         </motion.div>
@@ -62,10 +76,10 @@ export default function WritingDetail({ selectedWriting, setSelectedWriting, wri
                         >
                             <Image
                                 className="grow max-h-full max-w-full object-contain"
-                                width={465}
-                                height={478}
-                                src={(process.env.NEXT_PUBLIC_STRAPI_URL || "") + writingMedia.data.attributes.url}
-                                alt={"Drawing of " + selectedWriting.data.attributes.title}
+                                width={fullWriting?.media?.width}
+                                height={fullWriting?.media?.height}
+                                src={(process.env.NEXT_PUBLIC_STRAPI_URL || "") + fullWriting?.media?.url}
+                                alt={"Drawing of " + selectedWriting.title}
                             />
                         </motion.div>
                     }

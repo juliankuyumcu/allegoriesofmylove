@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 type PinnedContextType = {
     pinnedSlugs: Set<string> | null;
@@ -10,7 +10,7 @@ type PinnedContextType = {
 
 const PinnedContext = createContext<PinnedContextType | undefined>(undefined);
 
-export const PinnedProvider = ({ children }: { children: ReactNode }) => {
+export const PinnedProvider = ({ children }: { children: React.ReactNode }) => {
     const [ pinnedSlugs, setPinnedSlugs ] = useState<Set<string> | null>(null);
 
     useEffect(() => {

@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+  children
+}: {
+  children: React.ReactNode
+}) {
   return (
     <>
       <ThemeProvider>

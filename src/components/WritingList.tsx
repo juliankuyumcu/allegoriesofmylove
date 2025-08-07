@@ -20,8 +20,8 @@ export default function WritingList({ writings, setSelectedWriting }: WritingLis
             return; 
 
         setSortedWritings([
-            ...(writings.filter(writing => isPinned(writing.data.attributes.slug))),
-            ...(writings.filter(writing => !isPinned(writing.data.attributes.slug)))
+            ...(writings.filter(writing => isPinned(writing.slug))),
+            ...(writings.filter(writing => !isPinned(writing.slug)))
         ]);
     }, [pinnedSlugs, sortedWritings, writings, isPinned]);
 
@@ -29,7 +29,7 @@ export default function WritingList({ writings, setSelectedWriting }: WritingLis
         <div className={`flex flex-col gap-2 pl-2 px-2`}>
             {sortedWritings.map(writing =>
                 <WritingTitle 
-                    key={writing.data.attributes.slug}
+                    key={writing.slug}
                     writing={writing} 
                     setSelectedWriting={setSelectedWriting}
                     isHeader={false}
