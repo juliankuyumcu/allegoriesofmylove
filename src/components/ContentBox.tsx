@@ -1,31 +1,52 @@
 "use client"
 
-import React, { useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { AnimatePresence } from "motion/react";
 import DarkModeToggle from "./DarkModeToggle";
 import Margin from "./Margin";
 import WritingList from "./WritingList";
 import { WritingPreviewType } from "@/util/types";
 import WritingDetail from "./WritingDetail";
+import { useRouter } from "next/navigation";
 
 interface ContentBoxProps {
-    data: WritingPreviewType[],
-    writing: string 
+    data: WritingPreviewType[];
+    writing: WritingPreviewType | null; 
 }
 
-export default function ContentBox({data, writing} : {data: WritingPreviewType[], writing: WritingPreviewType | null}) {
+export default function ContentBox({data, writing} : ContentBoxProps) {
 
     const [ selectedWriting, setSelectedWriting ] = useState<WritingPreviewType | null>(writing);
     const [ showMedia, setShowMedia ] = useState<boolean>(false);
     const [ interactive, setInteractive ] = useState(!selectedWriting);
-    const contentRef = useRef(null);
-    const isInView = useInView(contentRef, {once: true});
+    const [ renderBox, setRenderBox ] = useState<boolean>(false);
+    const router = useRouter();
+
+    useEffect(() => {
+        const s = setTimeout(() => {
+            setRenderBox(true);
+        }, 2000);
+
+        return () => clearTimeout(s);
+    }, []);
+
+    useEffect(() => {
+        const onPopState = () => {
+            if (selectedWriting) {
+                setSelectedWriting(null);
+                setShowMedia(false);
+            }
+        };
+        window.addEventListener('popstate', onPopState);
+
+        return () => window.removeEventListener('popstate', onPopState);
+    }, [selectedWriting]);
 
     // useEffect(() => {
     //     window.history.pushState(null, "", window.history.state);
-    //     window.history.replaceState({...(selectedWriting && {slug: selectedWriting.slug})}, "", "http://localhost:3000" + (selectedWriting ? `/${selectedWriting.slug}` : ""));
-    // }, [selectedWriting]);
+    //     window.history.replaceState(null, "", process.env.NEXT_PUBLIC_DOMAIN + (selectedWriting ? `/${selectedWriting.slug}` : ""));
+    // }, [router, selectedWriting]);
 
     return (
         <main className="flex flex-col gap-4 subpixel-antialiased">
@@ -46,15 +67,17 @@ export default function ContentBox({data, writing} : {data: WritingPreviewType[]
             <div className="relative flex flex-row gap-3">
                 <Margin direction="vertical"/>
 
+                
                 <motion.div
-                    ref={contentRef}
+                    className="w-72 h-[60vh] md:w-116 md:h-120"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ duration: 1, delay: !isInView ? 2 : 0 }}
+                    transition={{ duration: 1 }}
                 >
+                    {renderBox && <>
                     <motion.div
                             key="list"
-                            className={`w-116 h-120 overflow-y-scroll scroll-smooth snap-y pr-3 duration-1000 ${!interactive ? "pointer-events-none" : ""}`}
+                            className={`w-full h-full overflow-y-scroll scroll-smooth snap-y pr-3 duration-1000 ${!interactive ? "pointer-events-none" : ""}`}
                             inert={interactive ? false : true}
                             initial={{ opacity: 0 }}
                             animate={{ opacity: selectedWriting ? 0 : 1}}
@@ -68,7 +91,7 @@ export default function ContentBox({data, writing} : {data: WritingPreviewType[]
                         {selectedWriting &&
                             <motion.div
                                 key="detail"
-                                className={`absolute top-0 right-0 w-116 h-120 pr-3 duration-1000 z-2 overflow-y-scroll`}
+                                className={`absolute top-0 right-0 w-full h-full px-3 duration-1000 z-2 overflow-y-scroll`}
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
@@ -83,9 +106,11 @@ export default function ContentBox({data, writing} : {data: WritingPreviewType[]
                             </motion.div>
                         }
                     </AnimatePresence> 
+                    </>
+                    }
                 </motion.div>
                 
-                <div className="absolute top-1 right-[1] h-[98%] w-px bg-pencil dark:bg-paper -z-1"></div>
+                <div className="absolute top-1 right-[1] h-[98%] w-px bg-pencil dark:bg-pencil -z-1"></div>
 
                 { /* scrollbar masks */}
                 <motion.div
@@ -102,7 +127,7 @@ export default function ContentBox({data, writing} : {data: WritingPreviewType[]
                     // exit={{ opacity: 0 }}
                     transition={{ delay: showMedia ? 0 : selectedWriting ? 0.5 : 0 , duration: 0.3 }}
                 >
-                    <div className="w-px h-[98%] bg-pencil dark:bg-paper z-11"></div>
+                    <div className="w-px h-[98%] bg-pencil dark:bg-pencil z-11"></div>
                 </motion.div>
             </div>
 

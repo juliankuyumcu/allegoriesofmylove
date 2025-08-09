@@ -12,7 +12,7 @@ export default function WritingContent({ content, typeIn }: WritingContentProps)
     const paragraphs = content.split("\n");
 
     return (
-        <div>
+        <div className="text-wrap w-full">
             {paragraphs.map((paragraph, index) =>
                 <Paragraph
                     key={index}

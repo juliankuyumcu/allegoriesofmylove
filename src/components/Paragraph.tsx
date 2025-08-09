@@ -17,20 +17,20 @@ export default function Paragraph({ paragraph, index, typeIn }: ParagraphProps) 
     return (
         <motion.div 
             ref={ref}
-            className="relative size-max" 
+            className="w-full relative size-max text-wrap" 
             initial={{ opacity: 0 }}
             animate={{ opacity: !isInView ? 0 : 1}}
         >
             <p>{paragraph || "\u200B"}</p>
-            {typeIn && 
+            {/* {typeIn && 
                 <motion.div
                     className={`absolute top-0 -right-px h-full bg-paper dark:bg-ink`}
                     key={index}
-                    initial={{ width: "calc(100% + 3px)"}}
+                    initial={{ width: "calc(100% + 2px)"}}
                     animate={{ width: 0 }}
                     transition={{ delay: (1 + 0.15 * (index + 1)), duration: 1, ease: "easeInOut" }}
                 ></motion.div>
-            }
+            } */}
         </motion.div>
     );
 }

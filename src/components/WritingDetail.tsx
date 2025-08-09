@@ -50,10 +50,10 @@ export default function WritingDetail({ selectedWriting, setSelectedWriting, sho
             />
             
             <AnimatePresence mode="wait">
-                {!showMedia && 
+                {(!!fullWriting?.content && !showMedia) && 
                     <motion.div
                         key="content"
-                        className={``}
+                        className={`text-pretty`}
                         initial={{ opacity: 1 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.5 }}

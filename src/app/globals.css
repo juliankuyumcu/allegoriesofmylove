@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #eeece3;
+  --paper: #d4d1c3;
   --ink: #6B6247;
-  --pencil: #cac7b5;
+  --pencil: #bebbaa;
 };
 
 @theme inline {

@@ -48,7 +48,7 @@ export default function WritingTitle({ writing, setSelectedWriting, isHeader, is
                     <div className={`flex flex-row gap-2`}>
                         <AnimatePresence>
                             <motion.button
-                                className={`cursor-pointer overflow-hidden`}
+                                className={`max-md:mb-2 max-md:mr-2 max-md:text-2xl text-md cursor-pointer overflow-hidden`}
                                 onClick={() => {setSelectedWriting(null); if (setShowMedia) setShowMedia(false);}}
                                 initial={{ width: 0 }}
                                 animate={{ width: 30 }}
@@ -59,7 +59,7 @@ export default function WritingTitle({ writing, setSelectedWriting, isHeader, is
                                 ←
                             </motion.button>
                         </AnimatePresence>
-                        <h2 className="text-left">
+                        <h2 className="text-left max-md:max-w-[60%] max-w-60">
                             [ {writing?.title.toLowerCase()} ]
                         </h2>
                     </div>   
