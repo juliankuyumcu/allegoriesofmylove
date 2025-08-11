@@ -3,7 +3,7 @@
 :root {
   --paper: #d4d1c3;
   --ink: #6B6247;
-  --pencil: #bebbaa;
+  --pencil: #b4b19f;
 };
 
 @theme inline {
@@ -23,8 +23,13 @@
 
 ::-webkit-scrollbar {
   height: 100%;
-  width: 3px; /* Adjust as needed for the overall scrollbar width */
+  width: 3px; 
   transition-duration: 1000ms !important;
+}
+
+html {
+  scrollbar-color: var(--pencil);
+  scrollbar-width: 3px;
 }
 
 .dark::-webkit-scrollbar {
@@ -41,7 +46,6 @@
 }
 
 .dark ::-webkit-scrollbar-track {
-  /* background-color: var(--ink); */
   background-color: var(--pencil);
 }
 

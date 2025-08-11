@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useRef } from "react";
-import { motion, useInView } from "motion/react";
+import { motion, useInView } from "framer-motion";
+
+import { useTheme } from "@/context/ThemeProvider";
 
 interface ParagraphProps {
     paragraph: string;
@@ -13,24 +15,31 @@ export default function Paragraph({ paragraph, index, typeIn }: ParagraphProps) 
 
     const ref = useRef(null);
     const isInView = useInView(ref);
+    const { theme, toggleTheme } = useTheme();
 
     return (
-        <motion.div 
-            ref={ref}
-            className="w-full relative size-max text-wrap" 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: !isInView ? 0 : 1}}
-        >
-            <p>{paragraph || "\u200B"}</p>
-            {/* {typeIn && 
-                <motion.div
-                    className={`absolute top-0 -right-px h-full bg-paper dark:bg-ink`}
-                    key={index}
-                    initial={{ width: "calc(100% + 2px)"}}
-                    animate={{ width: 0 }}
-                    transition={{ delay: (1 + 0.15 * (index + 1)), duration: 1, ease: "easeInOut" }}
-                ></motion.div>
-            } */}
-        </motion.div>
+        <div className="w-fit relative text-wrap" >
+            <motion.div 
+                key={`paragraph-${index}-container`}
+                ref={ref}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: !isInView ? 0 : 1}}
+            >
+                <p className="max-md:text-sm">{paragraph || "\u200B"}</p>
+                {typeIn && 
+                    <motion.div
+                        style={{
+                            position: "absolute", top: 0, right: -1, 
+                            height: "100%", 
+                            backgroundColor: theme === "dark" ? "var(--ink)" : "var(--paper)",
+                        }}
+                        key={`paragraph-${index}`}
+                        initial={{ width: "102%"}}
+                        animate={{ width: 0 }}
+                        transition={{ type: "tween", delay: (1 + 0.25 * (index + 1)), duration: 1.5, ease: "easeOut" }}
+                    ></motion.div>
+                }
+            </motion.div>
+        </div>
     );
 }

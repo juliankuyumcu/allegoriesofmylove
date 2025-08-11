@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion } from "framer-motion";
 import { MediaType, WritingPreviewType, WritingType } from "@/util/types";
 import WritingTitle from "@/components/WritingTitle";
 import WritingContent from "@/components/WritingContent";
@@ -48,39 +48,40 @@ export default function WritingDetail({ selectedWriting, setSelectedWriting, sho
                 showMedia={showMedia}
                 setShowMedia={setShowMedia}
             />
-            
             <AnimatePresence mode="wait">
-                {(!!fullWriting?.content && !showMedia) && 
+                {(!!fullWriting?.content && !showMedia) &&
                     <motion.div
                         key="content"
-                        className={`text-pretty`}
                         initial={{ opacity: 1 }}
                         animate={{ opacity: 1 }}
-                        transition={{ duration: 0.5 }}
+                        transition={{ type: "tween", duration: 0.5 }}
                         exit={{opacity: 0 }}
                     >
-                        <WritingContent
-                            content={fullWriting?.content || ""}
-                            typeIn={typeIn}
-                        />
+                        <div className={`text-pretty`}>
+                            <WritingContent
+                                content={fullWriting?.content || ""}
+                                typeIn={typeIn}
+                            />
+                        </div>
                     </motion.div>
                 }
                 {(!!fullWriting?.media && showMedia) &&
                     <motion.div
                         key="media"
-                        className="flex-1 flex justify-center items-center overflow-y-hidden p-6"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 0.4 }}
+                        transition={{ type: "tween", duration: 0.4 }}
                     >
-                        <Image
-                            className="grow max-h-full max-w-full object-contain"
-                            width={fullWriting?.media?.width}
-                            height={fullWriting?.media?.height}
-                            src={(process.env.NEXT_PUBLIC_STRAPI_URL || "") + fullWriting?.media?.url}
-                            alt={"Drawing of " + selectedWriting.title}
-                        />
+                        <div className="flex-1 flex justify-center items-center overflow-y-hidden p-6">
+                            <Image
+                                className="grow max-h-full max-w-full object-contain"
+                                width={fullWriting?.media?.width}
+                                height={fullWriting?.media?.height}
+                                src={(process.env.NEXT_PUBLIC_STRAPI_URL || "") + fullWriting?.media?.url}
+                                alt={"Drawing of " + selectedWriting.title}
+                            />
+                        </div>
                     </motion.div>
                 }
             </AnimatePresence>

@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect } from "react";
 import { usePinned } from "@/context/PinnedProvider";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 interface PinProps {
     slug: string;
@@ -22,6 +22,7 @@ export default function Pin({ slug }: PinProps) {
             className="cursor-pointer"
             onClick={() => togglePin(slug)} 
             title={`${localPinned ? "Unpin from" : "Pin to"} top`}
+            style={{marginBottom: "-1px"}}
         >
             <svg 
                 xmlns="http://www.w3.org/2000/svg" 
@@ -31,6 +32,7 @@ export default function Pin({ slug }: PinProps) {
                 className="-scale-x-100 mr-1"
             >
                 <motion.path 
+                    key="pin-path"
                     className={"stroke-ink fill-ink dark:stroke-paper dark:fill-paper duration-300"}
                     fillOpacity={localPinned ? 1 : 0}
                     strokeWidth={5}

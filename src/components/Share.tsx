@@ -6,7 +6,6 @@ interface ShareProps {
 }
 
 export default function Share({ slug, setCopied }: ShareProps) {
-
     return (
         <button 
             className="cursor-pointer overflow-visible"
