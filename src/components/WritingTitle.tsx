@@ -48,9 +48,10 @@ export default function WritingTitle({ writing, setSelectedWriting, isHeader, is
                 <div className={`flex flex-row ${isHeader ? "max-md:flex-col" : ""} max-md:gap-1 gap-4 justify-between duration-500 max-md:text-sm`}>
                     {isHeader ?
                         <div className={`flex flex-row max-md:flex-col max-md:m-auto gap-2`}>
-                            <button 
+                            <a 
                                 className={`max-md:hidden text-md cursor-pointer overflow-hidden`} 
-                                onClick={() => {setSelectedWriting(null); if (setShowMedia) setShowMedia(false);}} 
+                                onClick={(e) => {e.preventDefault(); setSelectedWriting(null); if (setShowMedia) setShowMedia(false);}}
+                                href={process.env.NEXT_PUBLIC_DOMAIN}
                                 title="Back"
                             >
                                 <motion.div
@@ -59,23 +60,24 @@ export default function WritingTitle({ writing, setSelectedWriting, isHeader, is
                                     animate={{ width: 30 }}
                                     transition={{ type:"tween" , delay: 0.8 }}
                                     exit={{ width: 0 }}
-                                    
                                 >
-                                    ←
+                                    <p className="text-center">←</p>
                                 </motion.div>
-                            </button>
+                            </a>
                             <h2 className="text-left max-md:text-center">
                                 {writing?.title.toLowerCase()} 
                             </h2>
                         </div>   
                         :
-                        <button
-                            className={`cursor-pointer text-left `}
-                            onClick={() => setSelectedWriting(writing)}
+                        <a
+                            className={`cursor-pointer text-left hover:underline`}
+                            onClick={(e) => {e.preventDefault(); setSelectedWriting(writing)}}
+                            href={process.env.NEXT_PUBLIC_DOMAIN + `/${writing.slug}`}
+                            target="_parent"
                             title="Open"
                         >
-                            {writing?.title.toLowerCase()} 
-                        </button>
+                            {writing?.title.toLowerCase()}
+                        </a>
                     }
                     <AnimatePresence mode="wait">
                         {copied &&
@@ -99,9 +101,10 @@ export default function WritingTitle({ writing, setSelectedWriting, isHeader, is
                                 style={{ display: "flex", alignItems: "between", justifyContent: "center" }}
                             >
                                 {isHeader && 
-                                    <button 
+                                    <a 
                                         className={`lg:hidden max-md:mr-10 max-md:text-2xl max-md:flex max-md:justify-center text-md cursor-pointer overflow-hidden`} 
-                                        onClick={() => {setSelectedWriting(null); if (setShowMedia) setShowMedia(false);}} 
+                                        onClick={(e) => {e.preventDefault(); setSelectedWriting(null); if (setShowMedia) setShowMedia(false);}}
+                                        href={process.env.NEXT_PUBLIC_DOMAIN}
                                         title="Back"
                                     >
                                         <motion.div
@@ -110,9 +113,9 @@ export default function WritingTitle({ writing, setSelectedWriting, isHeader, is
                                             animate={{ width: 30 }}
                                             transition={{ type:"tween" , delay: 0.8 }}
                                         >
-                                            <p className="max-md:mb-2">←</p>
+                                            <p className="text-center max-md:mb-2">←</p>
                                         </motion.div>
-                                    </button>
+                                    </a>
                                 }
                                 <div className="inline-flex flex-row gap-3 max-md:gap-4 items-center">
                                     {isHeader &&

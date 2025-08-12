@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "@/context/ThemeProvider";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 import { motion } from "framer-motion";
 import { AnimatePresence } from "framer-motion";
@@ -97,22 +98,20 @@ export default function ContentBox({data, writing} : ContentBoxProps) {
                                 <>
                                     <div inert={interactive ? false : true}>
                                         <motion.div
-                                                variants={variants}
-                                                key="list"
-                                                initial="hidden"
-                                                animate={selectedWriting ? "hidden" : "visible"}
-                                                transition={{ type: "tween", delay: !selectedWriting ? 0.5 : 0 }}
-                                                onAnimationComplete={() => setInteractive(!selectedWriting)}
-                                            >
-                                                <WritingList writings={data} setSelectedWriting={setSelectedWriting}/>
+                                            variants={variants}
+                                            key="list"
+                                            initial="hidden"
+                                            animate={selectedWriting ? "hidden" : "visible"}
+                                            transition={{ type: "tween", delay: !selectedWriting ? 0.5 : 0 }}
+                                            onAnimationComplete={() => setInteractive(!selectedWriting)}
+                                        >
+                                            <WritingList writings={data} setSelectedWriting={setSelectedWriting}/>
                                         </motion.div>
                                     </div>
 
                                     <AnimatePresence>
                                         {selectedWriting &&
-                                            <div
-                                                className={`absolute top-0 right-0 w-full h-full px-3 duration-1000 z-2 overflow-y-scroll`}
-                                            >
+                                            <div className={`absolute top-0 right-0 w-full h-full px-3 duration-1000 z-2 overflow-y-scroll`}>
                                                 <motion.div
                                                     variants={variants}
                                                     key="detail"
