@@ -32,10 +32,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const writing = slug ? (await getSpecificWriting(slug))[0] : null;
 
   return writing ? {
-    title: `${writing.title.toLowerCase()}`,
+    title: `${writing.title.toLowerCase()} | allegoriesofmy.love`,
     description: writing.content.split("\n")[0].substring(0, 50) + "...",
     openGraph: {
-      title: `${writing.title.toLowerCase()}`,
+      title: `${writing.title.toLowerCase()} | allegoriesofmy.love`,
       description: writing.content.split("\n")[0].substring(0, 50) + "...",
       url: `https://allegoriesofmy.love/${slug}`,
       type: "website",
