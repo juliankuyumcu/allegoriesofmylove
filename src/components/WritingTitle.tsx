@@ -15,7 +15,7 @@ interface WritingTitleProps {
 }
 
 export default function WritingTitle({ writing, setSelectedWriting, isHeader, isMedia, showMedia, setShowMedia }: WritingTitleProps) {
-    const ref = useRef(null);
+    const ref = useRef(null!);
     const isInView = useInView(ref, {amount: 0.5});
 
     const [ copied, setCopied ] = useState(false);

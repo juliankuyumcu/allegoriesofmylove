@@ -13,7 +13,7 @@ interface ParagraphProps {
 
 export default function Paragraph({ paragraph, index, typeIn }: ParagraphProps) {
 
-    const ref = useRef(null);
+    const ref = useRef(null!);
     const isInView = useInView(ref);
     const { theme, toggleTheme } = useTheme();
 

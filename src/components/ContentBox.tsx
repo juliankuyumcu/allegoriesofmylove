@@ -54,6 +54,7 @@ export default function ContentBox({data, writing} : ContentBoxProps) {
     }, [selectedWriting]);
 
     useEffect(() => {
+        document.title = selectedWriting?.title || "allegoriesofmy.love";
         window.history.pushState(null, "", window.history.state);
         window.history.replaceState(null, "", process.env.NEXT_PUBLIC_DOMAIN + (selectedWriting ? `/${selectedWriting.slug}` : ""));
     }, [router, selectedWriting]);
