@@ -17,6 +17,7 @@ export default function WritingDetail({ selectedWriting, setSelectedWriting, sho
 
     const [ typeIn, setTypeIn ] = useState(true);
     const [ fullWriting, setFullWriting ] = useState<WritingType | null>(null);
+    const [ mediaLoaded, setMediaLoaded ] = useState(false);
 
     useEffect(() => {
         strapiFetch({
@@ -69,7 +70,7 @@ export default function WritingDetail({ selectedWriting, setSelectedWriting, sho
                     <motion.div
                         key="media"
                         initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
+                        animate={{ opacity: mediaLoaded ? 1 : 0 }}
                         exit={{ opacity: 0 }}
                         transition={{ type: "tween", duration: 0.4 }}
                     >
@@ -80,6 +81,7 @@ export default function WritingDetail({ selectedWriting, setSelectedWriting, sho
                                 height={fullWriting?.media?.height}
                                 src={(process.env.NEXT_PUBLIC_STRAPI_URL || "") + fullWriting?.media?.url}
                                 alt={"Drawing of " + selectedWriting.title}
+                                onLoadingComplete={() => setMediaLoaded(true)}
                             />
                         </div>
                     </motion.div>

@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 import { useTheme } from "@/context/ThemeProvider";
+import ReactMarkdown from "react-markdown"
 
 interface ParagraphProps {
     paragraph: string;
@@ -24,8 +25,12 @@ export default function Paragraph({ paragraph, index, typeIn }: ParagraphProps) 
                 ref={ref}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: !isInView ? 0 : 1}}
-            >
-                <p className="max-md:text-sm">{paragraph || "\u200B"}</p>
+            >   
+                <p className="max-md:text-sm">
+                    <ReactMarkdown>
+                        {paragraph || "\u200B"}
+                    </ReactMarkdown>
+                </p>
                 {typeIn && 
                     <motion.div
                         style={{
