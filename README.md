@@ -21,6 +21,7 @@ A deeply personal project to act as an archive for my poetry. With it, I aim to 
 <br>
 <p align=center>
   <img src="./site-preview.png" alt="Site preview" width=60% margin=auto>
+  <img src="./writing-preview-dark.png" alt="Writing preview" width=60% margin=auto>
 </p>
 
 #### Note
