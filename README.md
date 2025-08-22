@@ -9,6 +9,7 @@ A deeply personal project to act as an archive for my poetry. With it, I aim to 
 * Enjoy a minimal interface; allow each writing to speak for itself, by itself.
 * Pin writings you like to the top of your feed, for easy access next time.
 * View images associated with each writing, when available.
+* Change between light mode or dark mode.
 * Share however you feel appropriate with an easy copy-to-clipboard function.
 
 ### Technical Features
