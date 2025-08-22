@@ -12,7 +12,7 @@ A deeply personal project to act as an archive for my poetry. With it, I aim to 
 * Change between light mode or dark mode.
 * Share however you feel appropriate with an easy copy-to-clipboard function.
 
-### Technical Features
+### Functionality
 
 * Built NextJS (with Tailwind), Strapi CMS, & hosted on AWS Lightsail.
 * SPA via dynamic, shallow writing, with URL updates and direct access to subpages from a URL visit.
