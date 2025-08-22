@@ -14,7 +14,7 @@ A deeply personal project to act as an archive for my poetry. With it, I aim to 
 
 ### Technology & Functionality
 
-* Built NextJS (with Tailwind), Strapi CMS, & hosted on AWS Lightsail.
+* Built with NextJS (with Tailwind), Strapi CMS, & hosted on AWS Lightsail.
 * SPA via dynamic, shallow writing, with URL updates and direct access to subpages from a URL visit.
 * Animations with Framer Motion.
 
