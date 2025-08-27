@@ -4,6 +4,7 @@ import Pin from "./Pin";
 import { AnimatePresence, motion, useInView } from "framer-motion";
 import Share from "./Share";
 import MediaToggle from "./MediaToggle";
+import { useRouter } from "next/navigation";
 
 interface WritingTitleProps {
     writing: WritingPreviewType;
@@ -15,6 +16,7 @@ interface WritingTitleProps {
 }
 
 export default function WritingTitle({ writing, setSelectedWriting, isHeader, isMedia, showMedia, setShowMedia }: WritingTitleProps) {
+    const router = useRouter();
     const ref = useRef(null!);
     const isInView = useInView(ref, {amount: 0.5});
 
@@ -50,7 +52,7 @@ export default function WritingTitle({ writing, setSelectedWriting, isHeader, is
                         <div className={`flex flex-row max-md:flex-col max-md:m-auto gap-2`}>
                             <a 
                                 className={`max-md:hidden text-md cursor-pointer overflow-hidden`} 
-                                onClick={(e) => {e.preventDefault(); setSelectedWriting(null); if (setShowMedia) setShowMedia(false);}}
+                                onClick={(e) => {e.preventDefault(); router.back()}}
                                 href={process.env.NEXT_PUBLIC_DOMAIN}
                                 title="Back"
                             >

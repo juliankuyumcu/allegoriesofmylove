@@ -26,11 +26,11 @@ export default function Paragraph({ paragraph, index, typeIn }: ParagraphProps) 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: !isInView ? 0 : 1}}
             >   
-                <p className="max-md:text-sm">
+                <div className="max-md:text-xs">
                     <ReactMarkdown>
                         {paragraph || "\u200B"}
                     </ReactMarkdown>
-                </p>
+                </div>
                 {typeIn && 
                     <motion.div
                         style={{
@@ -39,7 +39,7 @@ export default function Paragraph({ paragraph, index, typeIn }: ParagraphProps) 
                             backgroundColor: theme === "dark" ? "var(--ink)" : "var(--paper)",
                         }}
                         key={`paragraph-${index}`}
-                        initial={{ width: "102%"}}
+                        initial={{ width: "103%"}}
                         animate={{ width: 0 }}
                         transition={{ type: "tween", delay: (1 + 0.25 * (index + 1)), duration: 1.5, ease: "easeOut" }}
                     ></motion.div>

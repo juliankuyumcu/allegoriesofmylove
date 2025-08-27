@@ -54,14 +54,14 @@ export default function ContentBox({data, writing} : ContentBoxProps) {
     }, [selectedWriting]);
 
     useEffect(() => {
+        if (selectedWriting) window.history.pushState(null, "", window.history.state);
         document.title = selectedWriting?.title ? (selectedWriting.title + " | allegoriesofmy.love") : "allegoriesofmy.love";
-        window.history.pushState(null, "", window.history.state);
         window.history.replaceState(null, "", process.env.NEXT_PUBLIC_DOMAIN + (selectedWriting ? `/${selectedWriting.slug}` : ""));
     }, [router, selectedWriting]);
 
     return (
         <main className="flex flex-col gap-4 subpixel-antialiased">
-            <nav className="flex flex-row justify-between max-md:text-sm">
+            <nav className="flex flex-row justify-between items-center max-md:text-sm">
                 <motion.h1
                     key="page-title"
                     variants={variants}
