@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useTheme } from "@/context/ThemeProvider";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 import { motion } from "framer-motion";
 import { AnimatePresence } from "framer-motion";
@@ -27,6 +26,8 @@ export default function ContentBox({data, writing} : ContentBoxProps) {
     const [ renderBox, setRenderBox ] = useState<boolean>(false);
     const { theme, toggleTheme } = useTheme();
     const router = useRouter();
+    const lastSelectedWriting = useRef<WritingPreviewType>(null);
+    const isPopStateNavigation = useRef<boolean>(false);
 
     const variants = {
         visible: { opacity: 1},
@@ -43,20 +44,32 @@ export default function ContentBox({data, writing} : ContentBoxProps) {
 
     useEffect(() => {
         const onPopState = () => {
+            isPopStateNavigation.current = true;
+
             if (selectedWriting) {
+                lastSelectedWriting.current = selectedWriting;
                 setSelectedWriting(null);
                 setShowMedia(false);
+            } else {
+                const temp = lastSelectedWriting.current;
+                setSelectedWriting(temp);
+                lastSelectedWriting.current = null;
             }
         };
-        window.addEventListener('popstate', onPopState);
 
+        window.addEventListener('popstate', onPopState);
         return () => window.removeEventListener('popstate', onPopState);
     }, [selectedWriting]);
 
     useEffect(() => {
-        if (selectedWriting) window.history.pushState(null, "", window.history.state);
+        if (!isPopStateNavigation.current && selectedWriting)
+            window.history.pushState({writing: selectedWriting}, "", window.history.state);
+        
         document.title = selectedWriting?.title ? (selectedWriting.title + " | allegoriesofmy.love") : "allegoriesofmy.love";
+
         window.history.replaceState(null, "", process.env.NEXT_PUBLIC_DOMAIN + (selectedWriting ? `/${selectedWriting.slug}` : ""));
+
+        isPopStateNavigation.current = false;
     }, [router, selectedWriting]);
 
     return (
